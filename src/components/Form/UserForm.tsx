@@ -161,7 +161,7 @@ const UserForm = ({ setFlag, flag }: flagProps) => {
                             </Box>
                         </Box>
 
-                        <Button variant="contained">
+                        <Button variant="contained" sx={{ padding: 0 }}>
                             {!flag ? (
                                 <Link
                                     to="/"
