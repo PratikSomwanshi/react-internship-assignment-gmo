@@ -9,7 +9,7 @@ import PhoneInputWithCountrySelect from "react-phone-number-input";
 import "./userForm.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface flagProps {
     setFlag: (value: boolean) => void;
@@ -17,9 +17,12 @@ interface flagProps {
 }
 
 const UserForm = ({ setFlag, flag }: flagProps) => {
+    const navigate = useNavigate();
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [mobile, setMobile] = useState<any>("+91");
+
+    sessionStorage.clear();
 
     useEffect(() => {
         if (flag === true) {
@@ -51,16 +54,14 @@ const UserForm = ({ setFlag, flag }: flagProps) => {
         }
 
         setFlag(true);
-        toast.success("All field's are correct");
-        toast.success("Click again to store data in local storage", {
-            autoClose: 4000,
-        });
-    };
 
-    const handleOnSubmit = () => {
         localStorage.setItem("name-react-internship", name);
         localStorage.setItem("mobile_number-react-internship", mobile);
         localStorage.setItem("email-react-internship", email);
+
+        sessionStorage.setItem("flag-react-internship", true.toString());
+        toast.success("local");
+        navigate("/apidata");
     };
 
     return (
@@ -70,15 +71,8 @@ const UserForm = ({ setFlag, flag }: flagProps) => {
                 justifyContent: "space-around",
                 alignItems: "center",
                 height: "44.55rem",
-                // background: "red",
             }}
             component="section">
-            <Typography sx={{}}>
-                1 Fill and the fields <br />2 Click on verify button to <br />
-                check all is correct or not <br />3 Then Submit button will
-                appear <br />
-                click on that to see api data.
-            </Typography>
             <Paper
                 sx={{
                     height: "30rem",
@@ -126,7 +120,6 @@ const UserForm = ({ setFlag, flag }: flagProps) => {
                                 <OutlinedInput
                                     type="text"
                                     fullWidth
-                                    // required
                                     value={name}
                                     onChange={(eve) =>
                                         setName(eve.target.value)
@@ -161,22 +154,8 @@ const UserForm = ({ setFlag, flag }: flagProps) => {
                             </Box>
                         </Box>
 
-                        <Button variant="contained" sx={{ padding: 0 }}>
-                            {!flag ? (
-                                <Link
-                                    to="/"
-                                    onClick={handleOnClick}
-                                    className="link">
-                                    VERIFY
-                                </Link>
-                            ) : (
-                                <Link
-                                    to="/apidata"
-                                    className="link"
-                                    onClick={handleOnSubmit}>
-                                    SUBMIT
-                                </Link>
-                            )}
+                        <Button variant="contained" onClick={handleOnClick}>
+                            submit
                         </Button>
                     </Box>
                 </form>
