@@ -5,10 +5,12 @@ import { Routes, Route } from "react-router-dom";
 import ApiData from "./pages/apiData/ApiData";
 
 const App = () => {
+    // flag to see use has filled the details or not
     const [flag, setFlag] = useState(false);
 
     return (
         <div>
+            {/* routs for home page and api data fetching page */}
             <Routes>
                 <Route
                     path="/"
