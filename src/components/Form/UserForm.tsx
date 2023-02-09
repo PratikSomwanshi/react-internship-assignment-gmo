@@ -9,7 +9,7 @@ import PhoneInputWithCountrySelect from "react-phone-number-input";
 import "./userForm.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface flagProps {
     setFlag: (value: boolean) => void;
@@ -18,12 +18,16 @@ interface flagProps {
 
 const UserForm = ({ setFlag, flag }: flagProps) => {
     const navigate = useNavigate();
+
+    // to store name, email and mobile created the useState hooks
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [mobile, setMobile] = useState<any>("+91");
 
+    // the true flag stored in session storage is cleared when this page loads to prevent access to ape data fetching page
     sessionStorage.clear();
 
+    // flag set to false every time home page loads
     useEffect(() => {
         if (flag === true) {
             setFlag(false);
@@ -31,36 +35,44 @@ const UserForm = ({ setFlag, flag }: flagProps) => {
     }, []);
 
     const handleOnClick = () => {
+        //regex for email verification
         const emailFormat = /\S+@\S+\.\S+/;
+
+        // check the name is entered or not
         if (!name) {
             return toast.error("name can not be empty!");
         }
 
+        // check mobile number is not empty and all 10 digits are filled.
         if (!mobile) {
             setMobile("+91");
             return toast.error("Please fill valid mobile number!");
-        }
-
-        if (mobile.length !== 13) {
+        } else if (mobile.length !== 13) {
             return toast.error("Please fill valid mobile number!");
         }
 
+        //check email is empty or not
         if (!email) {
             return toast.error("email can not be empty!");
         }
 
+        //email validation using regex
         if (!email.match(emailFormat)) {
             return toast.error("invalid email!");
         }
 
         setFlag(true);
 
+        //data stored in local storage
         localStorage.setItem("name-react-internship", name);
         localStorage.setItem("mobile_number-react-internship", mobile);
         localStorage.setItem("email-react-internship", email);
 
+        // true flag stored in session storage to handle reloading in api page
         sessionStorage.setItem("flag-react-internship", true.toString());
         toast.success("local");
+
+        //navigate to api data fetching page
         navigate("/apidata");
     };
 
