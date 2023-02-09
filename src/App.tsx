@@ -20,7 +20,7 @@ const App = () => {
                     path="/apidata"
                     element={<ApiData flag={flag} setFlag={setFlag} />}
                 />
-                <Route path="*" element={<h1>404 not found</h1>} />
+                <Route path="*" element={<DataCollect setFlag={setFlag} flag={flag} /> } />
             </Routes>
         </div>
     );
