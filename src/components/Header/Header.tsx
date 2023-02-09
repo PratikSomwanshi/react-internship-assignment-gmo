@@ -7,7 +7,10 @@ const Header = () => {
             sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
+                justifyContent: {
+                    xs: "center",
+                    lg: "space-between",
+                },
                 height: "4rem",
                 background:
                     "linear-gradient(90deg, rgba(240,59,10,0.9136904761904762) 0%, rgba(255,196,0,0.8072478991596639) 100%)",
@@ -15,8 +18,24 @@ const Header = () => {
             maxWidth="100vw"
             px={4}
             py={2}>
-            <Typography variant="h4">React Internship Assignment</Typography>
-            <Box sx={{ display: "flex" }}>
+            <Typography
+                variant="h4"
+                sx={{
+                    display: {
+                        xs: "none",
+                        lg: "block",
+                    },
+                }}>
+                React Internship Assignment
+            </Typography>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: {
+                        xs: "column",
+                        md: "row",
+                    },
+                }}>
                 <Box sx={{ display: "flex" }}>
                     <Box component="span">Name :&nbsp;</Box>
                     <Box component="p">Pratik Somwanshi</Box>
