@@ -10,19 +10,17 @@ interface flagProps {
 
 const ApiData = ({ flag, setFlag }: flagProps) => {
     const navigate = useNavigate();
+    const localFlag = sessionStorage.getItem("flag-react-internship");
 
     useEffect(() => {
-        if (flag === false) {
+        if (!localFlag && flag === false) {
             toast.error("Enter your detail to access the api data");
             navigate("/");
         } else {
-            {
-                toast.success("data stored in local storage");
-            }
         }
     }, [flag]);
 
-    if (flag !== false) {
+    if (localFlag || flag !== false) {
         return (
             <div>
                 <h1>HEllo</h1>
